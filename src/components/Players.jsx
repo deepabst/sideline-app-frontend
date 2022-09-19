@@ -1,5 +1,6 @@
 import axios from "axios";
 import React from "react";
+import PlayersForm from "./PlayersForm";
 
 const BACKEND_BASE_URL = 'http://localhost:3000/players'
 
@@ -37,11 +38,26 @@ class Players extends React.Component {
         } // catch
     } // fetchPlayers
 
+    postPlayer = async (name, number) => {
+        console.log('Players::postPlayer()', name, number);
+        try {
+            const res = await axios.post(BACKEND_BASE_URL, {
+                name,
+                number
+            });
+            console.log('POST response:', res.data);
+            this.setState({
+                players: [res.data, ...this.state.players]
+            })
+        } catch (error) {
+            console.warn('Error saving secret to backend', error);
+        }
+    } // postPlayer
+
     render() {
         return (
             <div className='App'>
                 <h1>Players</h1>
-                {/* TODO: Add a player here */}
                 {
                     this.state.loading
                         ?
@@ -51,6 +67,8 @@ class Players extends React.Component {
                             {this.state.players.map(p => <PlayerLine player={p} />)}
                         </ul>
                 }
+                <h2> Add a player </h2>
+                <PlayersForm onSubmit={this.postPlayer} />
             </div>
         );
     }
