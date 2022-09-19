@@ -5,6 +5,7 @@ import { Route, Link, HashRouter as Router, Routes } from 'react-router-dom';
 
 import Login from './components/Login'
 import MyProfile from './components/MyProfile'
+import Players from './components/Players';
 
 const BASE_URL = 'http://localhost:3000';
 
@@ -71,6 +72,7 @@ class App extends React.Component {
                   <ul>
                     <li>Welcome {this.state.currentUser.username} | </li>
                     <li><Link to="/my_profile">My Profile</Link></li>
+                    <li><Link to="/players">Players</Link></li>
                     <li><Link onClick={this.handleLogout} to='/'>Logout</Link></li>
                   </ul>
                 )
@@ -87,6 +89,11 @@ class App extends React.Component {
         { this.state.currentUser.username && 
           <Route exact path="/my_profile"
           render={(props) => <MyProfile user={this.state.currentUser}{...props} /> } />
+        }
+        {
+          this.state.currentUser.username &&
+          <Route exact path="/players"
+          render={(props) => <Players user={this.state.currentUser}{...props} /> } />
         }
           <Route
             exact path="/login"
