@@ -95,6 +95,8 @@ class App extends React.Component {
                 render={(props) => <MyProfile user={this.state.currentUser}{...props} />} />
               <Route exact path="/players"
                 render={(props) => <Players user={this.state.currentUser}{...props} />} />
+              {/* <Route exact path="/players:id"
+                render={(props) => <PlayerProfile user={this.state.currentUser}{...props} />} /> */}
               <Route exact path="/players/:id" component={PlayerProfile} />
               <Route exact path="/players/:id/edit" component={PlayerEdit} />
 

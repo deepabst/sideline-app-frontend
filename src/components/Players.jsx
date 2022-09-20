@@ -1,13 +1,11 @@
 import axios from "axios";
 import React from "react";
 import PlayersForm from "./PlayersForm";
-import PlayerProfile from "./PlayerProfile";
-import { Route, Link, HashRouter as Router } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const BACKEND_BASE_URL = 'http://localhost:3000/players'
 
 function PlayerLine(props) {
-    console.log(props.player.id);
     return (
         <li className="player">
             <Link to={'players/'+props.player.id}>
@@ -27,7 +25,6 @@ class Players extends React.Component {
     }
 
     componentDidMount() {
-        console.log("Component Did Mount!");
         this.fetchPlayers();
     } // componentDidMount
 
@@ -62,7 +59,6 @@ class Players extends React.Component {
     render() {
         return (
             <div className='App'>
-                <Router>
                     <h1>Players</h1>
                     {
                         this.state.loading
@@ -71,14 +67,12 @@ class Players extends React.Component {
                             :
                             <ul>
                                 {
-                                    this.state.players.map(p => <PlayerLine player={p} />)
+                                    this.state.players.map(p => <PlayerLine key={p.id} player={p} />)
                                 }
                             </ul>
                     }
                     <h2> Add a player </h2>
                     <PlayersForm onSubmit={this.postPlayer} />
-                    <Route exact path="/players/:id" component={PlayerProfile} />
-                </Router>
             </div>
         );
     }

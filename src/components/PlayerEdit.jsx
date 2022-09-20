@@ -7,8 +7,8 @@ class PlayerEdit extends React.Component {
 
     state = {
         player: { 
-            name: 'abc',
-            number: 23
+            name: '',
+            number: 0
         },     // stores API response data
         loading: true,  // has the response come back?
         errors: null    // any errors?
@@ -65,7 +65,6 @@ class PlayerEdit extends React.Component {
     render() {
         return (
             <form onSubmit={this.handleSubmit}>
-                <p>{this.state.player.number}</p>
                 <label>Name</label>
                 <input name="name" type="text" value={this.state.player.name} onChange={this.handleInput} />
                 <label>Number</label>
