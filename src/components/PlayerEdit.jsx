@@ -11,33 +11,36 @@ class PlayerEdit extends React.Component {
         errors: null    // any errors?
 
     }
-    
-        fetchPlayer = async (id) => {
-            try {
-                const res = await axios.get(BACKEND_BASE_URL + '/' + id);
-                this.setState({
-                    player: res.data,
-                    loading: false
-                });
-            } catch (error) {
-                console.warn("trouble loading player from the API", error);
-            } // catch
-        } // fetchPlayer
+
+    fetchPlayer = async (id) => {
+        try {
+            const res = await axios.get(BACKEND_BASE_URL + '/' + id);
+            this.setState({
+                player: res.data,
+                loading: false
+            });
+        } catch (error) {
+            console.warn("trouble loading player from the API", error);
+        } // catch
+    } // fetchPlayer
 
     componentDidMount() {
         this.fetchPlayer(this.props.match.params.id);
     } // componentDidMount
 
     updatePlayer = async (player) => {
-        console.log('Players::updatePlayer()', player.name, player.number);
+        const name = player.name;
+        const number = player.number;
+        const id = this.props.match.params.id;
+        console.log('Players::updatePlayer()', name, number);
         try {
             const res = await axios.put(BACKEND_BASE_URL+ '/' + id, {
                 name,
                 number
             });
-            console.log('POST response:', res.data);
-            // redirect to the players index
-            this.props.history.push(`/players/${this.props.id}`)
+            console.log('PUT response:', res.data);
+            // redirect to the player show page
+            this.props.history.push(`/players/${this.props.match.params.id}`)
         } catch (error) {
             console.warn('Error saving secret to backend', error);
         }
@@ -46,25 +49,25 @@ class PlayerEdit extends React.Component {
     handleInput = (ev) => {
         switch (ev.target.name) {
             case 'name':
-                this.setState({ name: ev.target.value })
+                this.setState({ player: { name: ev.target.value } })
                 break;
             case 'number':
-                this.setState({ number: ev.target.value })
+                this.setState({ player: { number: ev.target.value } })
         }
     }
 
     handleSubmit = (ev) => {
         ev.preventDefault(); // stop submit from reloading page
-        this.props.onSubmit(this.state.name, this.state.number);
+        this.updatePlayer(this.state.player);
     } // handleSubmit()
 
     render() {
         return (
             <form onSubmit={this.handleSubmit}>
                 <label>Name</label>
-                <input name="name" type="text" value="Dee" onChange={this.handleInput} />
+                <input name="name" type="text" value={this.state.player.name} onChange={this.handleInput} />
                 <label>Number</label>
-                <input name="number" type="number" value="23" onChange={this.handleInput} />
+                <input name="number" type="number" value={this.state.player.number} onChange={this.handleInput} />
                 <button>Update Player</button>
             </form>
         ); // return
