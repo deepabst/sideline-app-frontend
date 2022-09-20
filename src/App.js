@@ -7,6 +7,7 @@ import Login from './components/Login'
 import MyProfile from './components/MyProfile'
 import Players from './components/Players';
 import PlayerProfile from './components/PlayerProfile';
+import PlayerEdit from './components/PlayerEdit';
 
 const BASE_URL = 'http://localhost:3000';
 
@@ -95,6 +96,8 @@ class App extends React.Component {
               <Route exact path="/players"
                 render={(props) => <Players user={this.state.currentUser}{...props} />} />
               <Route exact path="/players/:id" component={PlayerProfile} />
+              <Route exact path="/players/:id/edit" component={PlayerEdit} />
+
             </div>
           )
         }

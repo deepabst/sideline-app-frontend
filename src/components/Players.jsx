@@ -2,7 +2,7 @@ import axios from "axios";
 import React from "react";
 import PlayersForm from "./PlayersForm";
 import PlayerProfile from "./PlayerProfile";
-import { Route, Link, HashRouter as Router, Routes } from 'react-router-dom';
+import { Route, Link, HashRouter as Router } from 'react-router-dom';
 
 const BACKEND_BASE_URL = 'http://localhost:3000/players'
 
@@ -59,10 +59,6 @@ class Players extends React.Component {
         }
     } // postPlayer
 
-    // handleClick = (ev) => {
-    //     console.log('Player Clicked!');
-    // }
-
     render() {
         return (
             <div className='App'>
@@ -75,7 +71,8 @@ class Players extends React.Component {
                             :
                             <ul>
                                 {
-                                    this.state.players.map(p => <PlayerLine player={p} />)}
+                                    this.state.players.map(p => <PlayerLine player={p} />)
+                                }
                             </ul>
                     }
                     <h2> Add a player </h2>

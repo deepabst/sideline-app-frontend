@@ -19,8 +19,6 @@ class PlayersForm extends React.Component {
 
     handleSubmit = (ev) => {
         ev.preventDefault(); // stop submit from reloading page
-        console.log('new player form submitted name:', this.state.name);
-        //What shape does the name and number data have to be to create a new player?
         this.props.onSubmit(this.state.name, this.state.number);
     } // handleSubmit()
 
@@ -29,7 +27,7 @@ class PlayersForm extends React.Component {
             <form onSubmit={this.handleSubmit}>
                 <label>Name</label>
                 <input name="name" type="text" onChange={this.handleInput} />
-                {/* TODO: get only  available jumper numbers from the teams */}
+                {/* TODO: get available team jumper numbers only */}
                 <label>Number</label>
                 <input name="number" type="number" onChange={this.handleInput} />
                 <button>Add</button>
@@ -37,6 +35,6 @@ class PlayersForm extends React.Component {
         ); // return
     } // render
 
-} // class PLayersForm
+} // class PlayersForm
 
 export default PlayersForm;

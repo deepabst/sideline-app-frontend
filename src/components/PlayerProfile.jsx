@@ -4,7 +4,7 @@ import axios from "axios";
 const BACKEND_BASE_URL = 'http://localhost:3000/players'
 
 class PlayerProfile extends React.Component {
-    
+
     state = {
         player: {},     // stores API response data
         loading: true,  // has the response come back?
@@ -12,9 +12,9 @@ class PlayerProfile extends React.Component {
 
     }
 
-    fetchPlayer = async (id) =>{
+    fetchPlayer = async (id) => {
         try {
-            const res = await axios.get(BACKEND_BASE_URL+'/'+id);
+            const res = await axios.get(BACKEND_BASE_URL + '/' + id);
             this.setState({
                 player: res.data,
                 loading: false
@@ -25,25 +25,42 @@ class PlayerProfile extends React.Component {
     } // fetchPlayer
 
     componentDidMount() {
-        console.log("Component Did Mount!");
-        //this.props.match.params.origin ,this.props.match.params.destination
         this.fetchPlayer(this.props.match.params.id);
     } // componentDidMount
 
+    deletePlayer = async () => {
+        console.log('delete player ->', this.state.player.id)
+        try {
+            // send request to delete
+            await axios.delete(BACKEND_BASE_URL + '/' + this.state.player.id);
+            // redirect to the players index
+            this.props.history.push(`/players`)
+        } catch (error) {
+            console.warn("trouble deleting player", error);
+        } // catch
+        
+    }
+    
+    editPlayer = () => {
+        this.props.history.push(`/players/${this.state.player.id}/edit`)
+    }
+
     render() {
-        console.log(`PlayerProfile!!!!`)
+
         return (
             <div>Player profile
-            {
-                this.state.loading
-                ?
-                <p>Loading player...</p>
-                :
-                <ul>
-                        <li>Name: {this.state.player.name}</li>
-                        <li>Number: {this.state.player.number}</li>
-                    </ul>
-            }
+                {
+                    this.state.loading
+                        ?
+                        <p>Loading player...</p>
+                        :
+                        <ul>
+                            <li>Name: {this.state.player.name}</li>
+                            <li>Number: {this.state.player.number}</li>
+                            <button onClick={this.editPlayer}>Edit</button>
+                            <button onClick={this.deletePlayer}>Delete</button>
+                        </ul>
+                }
             </div>
         );//return
     }//render
