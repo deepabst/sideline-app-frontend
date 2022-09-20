@@ -1,13 +1,18 @@
 import axios from "axios";
 import React from "react";
 import PlayersForm from "./PlayersForm";
+import PlayerProfile from "./PlayerProfile";
+import { Route, Link, HashRouter as Router, Routes } from 'react-router-dom';
 
 const BACKEND_BASE_URL = 'http://localhost:3000/players'
 
 function PlayerLine(props) {
+    console.log(props.player.id);
     return (
         <li className="player">
-            ({props.player.number}){props.player.name}
+            <Link to={'players/'+props.player.id}>
+                ({props.player.number}){props.player.name}
+            </Link>
         </li>
     );
 } // PlayerLine
@@ -54,21 +59,29 @@ class Players extends React.Component {
         }
     } // postPlayer
 
+    // handleClick = (ev) => {
+    //     console.log('Player Clicked!');
+    // }
+
     render() {
         return (
             <div className='App'>
-                <h1>Players</h1>
-                {
-                    this.state.loading
-                        ?
-                        <p>Loading players...</p>
-                        :
-                        <ul>
-                            {this.state.players.map(p => <PlayerLine player={p} />)}
-                        </ul>
-                }
-                <h2> Add a player </h2>
-                <PlayersForm onSubmit={this.postPlayer} />
+                <Router>
+                    <h1>Players</h1>
+                    {
+                        this.state.loading
+                            ?
+                            <p>Loading players...</p>
+                            :
+                            <ul>
+                                {
+                                    this.state.players.map(p => <PlayerLine player={p} />)}
+                            </ul>
+                    }
+                    <h2> Add a player </h2>
+                    <PlayersForm onSubmit={this.postPlayer} />
+                    <Route exact path="/players/:id" component={PlayerProfile} />
+                </Router>
             </div>
         );
     }
