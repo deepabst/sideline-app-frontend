@@ -5,6 +5,9 @@ import { Route, Link, HashRouter as Router, Routes } from 'react-router-dom';
 
 import Login from './components/Login'
 import MyProfile from './components/MyProfile'
+import Players from './components/Players';
+import PlayerProfile from './components/PlayerProfile';
+import PlayerEdit from './components/PlayerEdit';
 
 const BASE_URL = 'http://localhost:3000';
 
@@ -31,7 +34,7 @@ class App extends React.Component {
     // If our token is valid then we set the state to our current user. If not you'll see a warning in your console that you're unauthorized.
 
     let token = localStorage.getItem("jwt");
-    if(token === null){
+    if (token === null) {
       // break out of the setcurrentuser method
       // when there is no user token
       return;
@@ -71,6 +74,7 @@ class App extends React.Component {
                   <ul>
                     <li>Welcome {this.state.currentUser.username} | </li>
                     <li><Link to="/my_profile">My Profile</Link></li>
+                    <li><Link to="/players">Players</Link></li>
                     <li><Link onClick={this.handleLogout} to='/'>Logout</Link></li>
                   </ul>
                 )
@@ -80,17 +84,28 @@ class App extends React.Component {
                     <li><Link to="/login">Login</Link></li>
                   </ul>
                 )
-              }
+            }
           </nav>
           <hr />
         </header>
-        { this.state.currentUser.username && 
-          <Route exact path="/my_profile"
-          render={(props) => <MyProfile user={this.state.currentUser}{...props} /> } />
+        {this.state.currentUser.username &&
+          (
+            <div>
+              <Route exact path="/my_profile"
+                render={(props) => <MyProfile user={this.state.currentUser}{...props} />} />
+              <Route exact path="/players"
+                render={(props) => <Players user={this.state.currentUser}{...props} />} />
+              {/* <Route exact path="/players:id"
+                render={(props) => <PlayerProfile user={this.state.currentUser}{...props} />} /> */}
+              <Route exact path="/players/:id" component={PlayerProfile} />
+              <Route exact path="/players/:id/edit" component={PlayerEdit} />
+
+            </div>
+          )
         }
-          <Route
-            exact path="/login"
-            render={(props) => <Login setCurrentUser={this.setCurrentUser}{...props} />
+        <Route
+          exact path="/login"
+          render={(props) => <Login setCurrentUser={this.setCurrentUser}{...props} />
           }
         />
       </Router>
