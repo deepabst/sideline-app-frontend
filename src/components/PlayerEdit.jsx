@@ -22,7 +22,6 @@ class PlayerEdit extends React.Component {
                 player: res.data,
                 loading: false
             });
-            console.log(`res.data--> ${res.data}`)
         } catch (error) {
             console.warn("trouble loading player from the API", error);
         } // catch
@@ -46,7 +45,7 @@ class PlayerEdit extends React.Component {
             // redirect to the player show page
             this.props.history.push(`/players/${this.props.match.params.id}`)
         } catch (error) {
-            console.warn('Error saving secret to backend', error);
+            console.warn('Error saving player to backend', error);
         }
     } //updatePlayer
 
@@ -73,7 +72,6 @@ class PlayerEdit extends React.Component {
             </form>
         ); // return
     } // render
-
 } // class PlayerEdit
 
 export default PlayerEdit;

@@ -5,9 +5,14 @@ import { Route, Link, HashRouter as Router, Routes } from 'react-router-dom';
 
 import Login from './components/Login'
 import MyProfile from './components/MyProfile'
+
 import Players from './components/Players';
 import PlayerProfile from './components/PlayerProfile';
 import PlayerEdit from './components/PlayerEdit';
+
+import Teams from './components/Teams';
+import TeamProfile from './components/TeamProfile';
+import TeamEdit from './components/TeamEdit';
 
 const BASE_URL = 'http://localhost:3000';
 
@@ -75,6 +80,7 @@ class App extends React.Component {
                     <li>Welcome {this.state.currentUser.username} | </li>
                     <li><Link to="/my_profile">My Profile</Link></li>
                     <li><Link to="/players">Players</Link></li>
+                    <li><Link to="/teams">Teams</Link></li>
                     <li><Link onClick={this.handleLogout} to='/'>Logout</Link></li>
                   </ul>
                 )
@@ -95,8 +101,12 @@ class App extends React.Component {
                 render={(props) => <MyProfile user={this.state.currentUser}{...props} />} />
               <Route exact path="/players"
                 render={(props) => <Players user={this.state.currentUser}{...props} />} />
-              {/* <Route exact path="/players:id"
-                render={(props) => <PlayerProfile user={this.state.currentUser}{...props} />} /> */}
+              <Route exact path="/teams"
+                render={(props) => <Teams user={this.state.currentUser}{...props} />} />
+              <Route exact path="/teams/:id"
+                render={(props) => <TeamProfile user={this.state.currentUser}{...props} />} />
+              <Route exact path="/teams/:id/edit"
+                render={(props) => <TeamEdit user={this.state.currentUser}{...props} />} />
               <Route exact path="/players/:id" component={PlayerProfile} />
               <Route exact path="/players/:id/edit" component={PlayerEdit} />
 

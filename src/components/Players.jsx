@@ -8,7 +8,7 @@ const BACKEND_BASE_URL = 'http://localhost:3000/players'
 function PlayerLine(props) {
     return (
         <li className="player">
-            <Link to={'players/'+props.player.id}>
+            <Link to={'/players/'+props.player.id}>
                 {props.player.number}-{props.player.name}
             </Link>
         </li>
@@ -21,8 +21,7 @@ class Players extends React.Component {
         players: [],    // stores API response data
         loading: true,  // has the response come back?
         errors: null    // any errors?
-
-    }
+    } // state
 
     componentDidMount() {
         this.fetchPlayers();
