@@ -3,6 +3,7 @@ import { Route, HashRouter as Router, Link } from 'react-router-dom';
 import Chatrooms from './Chatrooms';
 import ActionCable from 'action-cable-react-jwt'
 import Chatroom from './NewChatroom';
+import Login from './Login';
 import IndividualChatroom from './IndividualChatroom';
 
 
@@ -23,14 +24,14 @@ class Home extends React.Component {
                         {' '}|{' '}
                         <Link to='/chatrooms'>Chatrooms</Link>
                         {' '}|{' '}
-                        
+                        <Link to='/login'>Login</Link>
                         
                     </nav>
 
 
                 <hr />
                 </header>
-                
+                <Route exact path="/login" component={ Login }/>
                 <Route exact path="/chatrooms" component={ Chatrooms }/>
                 <Route exact path="/chatrooms/:id" component={IndividualChatroom} />
                 

@@ -25,17 +25,7 @@ class NewChatroom extends React.Component {
     }
     
 
-    // getIndividualChatroom = (topic) => {
-    //     axios.get( `http://localhost:3000/chats/${topic}` )
-    //     .then( res => {
-    //         console.log(`individualChat:`, res.data); 
-    //         this.setState({messages: res.data})
-            
-    //     })
-    //     .catch( err => {console.error('Loading error: ', err)
-            
-    //     })
-    // }
+    
 
     componentDidMount(){
         console.log('componentDidMount()');

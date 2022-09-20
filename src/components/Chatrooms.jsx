@@ -70,7 +70,7 @@ class Chatrooms extends React.Component {
                     {this.state.chatrooms.map (c =>
                     <li key={c.id}><Link to={`/chatrooms/${c.id}`}>{c.topic}</Link> Created by {c.user}</li> 
                      )}
-                    </ul>
+                </ul>
                 </Router>
                 <Route exact path="/chatrooms/:id" component={ IndividualChatroom }/>
             </div>
