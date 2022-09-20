@@ -11,7 +11,7 @@ function PlayerLine(props) {
     return (
         <li className="player">
             <Link to={'players/'+props.player.id}>
-                ({props.player.number}){props.player.name}
+                {props.player.number}-{props.player.name}
             </Link>
         </li>
     );

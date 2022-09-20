@@ -6,7 +6,10 @@ const BACKEND_BASE_URL = 'http://localhost:3000/players'
 class PlayerEdit extends React.Component {
 
     state = {
-        player: {},     // stores API response data
+        player: { 
+            name: 'abc',
+            number: 23
+        },     // stores API response data
         loading: true,  // has the response come back?
         errors: null    // any errors?
 
@@ -19,6 +22,7 @@ class PlayerEdit extends React.Component {
                 player: res.data,
                 loading: false
             });
+            console.log(`res.data--> ${res.data}`)
         } catch (error) {
             console.warn("trouble loading player from the API", error);
         } // catch
@@ -47,13 +51,10 @@ class PlayerEdit extends React.Component {
     } //updatePlayer
 
     handleInput = (ev) => {
-        switch (ev.target.name) {
-            case 'name':
-                this.setState({ player: { name: ev.target.value } })
-                break;
-            case 'number':
-                this.setState({ player: { number: ev.target.value } })
-        }
+        this.setState({ player: {
+            ...this.state.player, // leaves the rest of the obj intact
+            [ev.target.name]: ev.target.value
+        } })
     }
 
     handleSubmit = (ev) => {
@@ -64,6 +65,7 @@ class PlayerEdit extends React.Component {
     render() {
         return (
             <form onSubmit={this.handleSubmit}>
+                <p>{this.state.player.number}</p>
                 <label>Name</label>
                 <input name="name" type="text" value={this.state.player.name} onChange={this.handleInput} />
                 <label>Number</label>
