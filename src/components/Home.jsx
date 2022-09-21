@@ -5,14 +5,15 @@ import ActionCable from 'action-cable-react-jwt'
 import Chatroom from './NewChatroom';
 import Login from './Login';
 import IndividualChatroom from './IndividualChatroom';
+import App from '../App';
 
 
 class Home extends React.Component {
-    
 
 
-    render(){
-        return(
+
+    render() {
+        return (
             <div>
                <Router>
                 <header>
