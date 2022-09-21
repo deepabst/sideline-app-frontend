@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 // eslint-disable-next-line
-import { Route, Link, HashRouter as Router, Routes } from 'react-router-dom';
+import { Route, Link, HashRouter as Router } from 'react-router-dom';
 
 import Login from './components/Login'
 import MyProfile from './components/MyProfile'
@@ -77,13 +77,14 @@ class App extends React.Component {
       <Router>
         <header>
           <nav>
+          <h1>SIDELINES</h1>
             {/* Show either logged in or logged out nav bar */}
             {
               this.state.currentUser.username !== undefined
                 ?
                 (
                   <ul>
-                    <li>Welcome {this.state.currentUser.username} | </li>
+                    <li>Welcome {this.state.currentUser.username}</li>
                     <li><Link to="/my_profile">My Profile</Link></li>
                     <li><Link to="/players">Players</Link></li>
                     <li><Link to="/teams">Teams</Link></li>
@@ -115,11 +116,11 @@ class App extends React.Component {
                 render={(props) => <TeamProfile user={this.state.currentUser}{...props} />} />
               <Route exact path="/teams/:id/edit"
                 render={(props) => <TeamEdit user={this.state.currentUser}{...props} />} />
-                <Route exact path="/stats"
+              <Route exact path="/stats"
                 render={(props) => <Stats user={this.state.currentUser}{...props} />} />
-                <Route exact path="/stats/:id"
+              <Route exact path="/stats/:id"
                 render={(props) => <StatProfile user={this.state.currentUser}{...props} />} />
-                <Route exact path="/stats/:id/edit"
+              <Route exact path="/stats/:id/edit"
                 render={(props) => <StatEdit user={this.state.currentUser}{...props} />} />
               <Route exact path="/players/:id" component={PlayerProfile} />
               <Route exact path="/players/:id/edit" component={PlayerEdit} />
