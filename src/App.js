@@ -14,6 +14,10 @@ import Teams from './components/Teams';
 import TeamProfile from './components/TeamProfile';
 import TeamEdit from './components/TeamEdit';
 
+import Stats from './components/Stats';
+import StatProfile from './components/StatProfile';
+import StatEdit from './components/StatEdit';
+
 const BASE_URL = 'http://localhost:3000';
 
 class App extends React.Component {
@@ -81,6 +85,7 @@ class App extends React.Component {
                     <li><Link to="/my_profile">My Profile</Link></li>
                     <li><Link to="/players">Players</Link></li>
                     <li><Link to="/teams">Teams</Link></li>
+                    <li><Link to="/stats">Stats</Link></li>
                     <li><Link onClick={this.handleLogout} to='/'>Logout</Link></li>
                   </ul>
                 )
@@ -107,6 +112,12 @@ class App extends React.Component {
                 render={(props) => <TeamProfile user={this.state.currentUser}{...props} />} />
               <Route exact path="/teams/:id/edit"
                 render={(props) => <TeamEdit user={this.state.currentUser}{...props} />} />
+                <Route exact path="/stats"
+                render={(props) => <Stats user={this.state.currentUser}{...props} />} />
+                <Route exact path="/stats/:id"
+                render={(props) => <StatProfile user={this.state.currentUser}{...props} />} />
+                <Route exact path="/stats/:id/edit"
+                render={(props) => <StatEdit user={this.state.currentUser}{...props} />} />
               <Route exact path="/players/:id" component={PlayerProfile} />
               <Route exact path="/players/:id/edit" component={PlayerEdit} />
 

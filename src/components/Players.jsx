@@ -51,7 +51,7 @@ class Players extends React.Component {
                 players: [res.data, ...this.state.players]
             })
         } catch (error) {
-            console.warn('Error saving secret to backend', error);
+            console.warn('Error saving player to backend', error);
         }
     } // postPlayer
 
