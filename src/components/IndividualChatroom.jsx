@@ -1,53 +1,86 @@
-import React from 'react';
-import axios from 'axios';
-import Chatrooms from './Chatrooms';
+import React, { Component } from 'react';
+import ChatFeed from './ChatFeed';
+import RoomWebSocket from './RoomWebSocket';
 
-
-class IndividualChatroom extends React.Component {
-
-    state = {
-        messages: [],
-        users: [],
-        loading: true, 
-        error: null,
-        topic: ''
-
+class IndividualChatroom extends Component {
+    constructor() {
+        super()
+        this.state = {
+            newMessage: ''
+        }
     }
-    componentDidMount(){
-        //       console.log('componentDidMount()');
-               this.getIndividualChatroom()
-           }
 
-    getIndividualChatroom = (topic) => {
-        axios.get( `http://localhost:3000/chats/${topic}` )
-        .then( res => {
- //           console.log(`Chatrooms:`, res.data); 
-            this.setState({messages: res.data})
-            
+    displayUsers = (users) => {
+        return users.map( user => {
+            return <li key={user.id}>{user.username}</li>
         })
-        .catch( err => {console.error('Loading error: ', err)
-            
+    }
+
+    handleMessageInput = (event) => {
+        this.setState({
+            newMessage: event.target.value
         })
-    }//getChats
+    }
 
+    submitMessage = (event) => {
+        event.preventDefault()
 
-    render(){
-        if(this.state.error !== null){
-            return <p>There was an error loading chatrooms</p>;
+        this.setState({
+            newMessage: ''
+        })
+
+        const message = {
+            content: this.state.newMessage,
+            user_id: this.props.currentUser.id,
+            chat_id: this.props.chatData.chat.id
         }
 
-        return(
-            <div>
-            chatroom
-            </div>
-            
-            
-        )
+        fetch("http://localhost:3000/messages", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json"
+            },
+            content: JSON.stringify({message: message})
+        })
+        .then(resp => resp.json())
+        .then(result => {
+            let messageDiv = document.getElementById('messages')
+            messageDiv.scrollTop = messageDiv.scrollHeight
+        })
     }
 
+    render() {
+        return (
+            <div>
+                { Object.keys(this.props.chatData.chat).length > 0 ? (
+                    <div id='room-show'>
+                        <h1 id='room-header'>Welcome to the {this.props.chatData.chat.topic} Room!</h1>
+                        <div id='room-sidebar'>
+                            
+                            <ul id='users-list'>
+                                {this.displayUsers(this.props.chatData.chat.users.data)}
+                            </ul>
+                        </div>
+                        <ChatFeed room={this.props.chatData.chat} currentUser={this.props.currentUser} />
+                        <form id='chat-form' onSubmit={this.submitMessage}>
+                            <h3>Post a new message:</h3>
+                            <textarea type='text' value={this.state.newMessage} onChange={this.handleMessageInput}></textarea>
+                            <br></br>
+                            <input type='submit'></input>
+                        </form>
+                    </div>
+                ) : null }
+                
+                <RoomWebSocket
+                    cableApp={this.props.cableApp}
+                    updateApp={this.props.updateApp}
+                    getChatData={this.props.getChatData}
+                    chatData={this.props.chatData}
+                />
+            </div>
+        )
+    }
+}
 
-
-
-}// class
-
-export default IndividualChatroom;
+export default IndividualChatroom

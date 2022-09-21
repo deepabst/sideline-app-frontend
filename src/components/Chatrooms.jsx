@@ -64,15 +64,14 @@ class Chatrooms extends React.Component {
             
             <div>
                 <NewChatroom onSubmit={this.postChatroom}/>
-                <Router>
+                
             
                 <ul>
                     {this.state.chatrooms.map (c =>
                     <li key={c.id}><Link to={`/chatrooms/${c.id}`}>{c.topic}</Link> Created by {c.user}</li> 
                      )}
                 </ul>
-                </Router>
-                <Route exact path="/chatrooms/:id" component={ IndividualChatroom }/>
+                
             </div>
         
         )

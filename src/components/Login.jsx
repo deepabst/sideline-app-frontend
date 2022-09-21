@@ -47,14 +47,14 @@ class Login extends React.Component {
         return (
             <form onSubmit={this.handleSubmit}>
                 <label>Login Form</label>
-                <br />
+                
                 <input 
                 onChange={this.handleInput}
                 name="email"
                 type="email"
                 placeholder="Enter Email"
                 />
-                <br />
+                
                 <input 
                 onChange={this.handleInput}
                 name="password"

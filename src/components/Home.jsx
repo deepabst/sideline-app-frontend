@@ -32,7 +32,7 @@ class Home extends React.Component {
 
                 <hr />
                 </header>
-                <Route exact path="/login" component={ Login }/>
+                {/* <Route exact path="/login" component={ Login }/> */}
                 <Route exact path="/chatrooms" component={ Chatrooms }/>
                 <Route exact path="/chatrooms/:id" component={IndividualChatroom} />
                 
