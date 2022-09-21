@@ -11,9 +11,10 @@ class IndividualChatroom extends Component {
     }
 
     displayUsers = (users) => {
-        return users.map( user => {
-            return <li key={user.id}>{user.username}</li>
-        })
+        return 'user'
+        // return users.map( user => {
+        //     return <li key={user.id}>{user.username}</li>
+        // })
     }
 
     handleMessageInput = (event) => {
@@ -52,17 +53,21 @@ class IndividualChatroom extends Component {
 
     render() {
         return (
+            // <div>
+            //     hello {console.log(this.props.chatData[0].topic)}
+            // </div>
             <div>
-                { Object.keys(this.props.chatData.chat).length > 0 ? (
+                { Object.keys(this.props.chatData).length > 0 ? (
+                    
                     <div id='room-show'>
-                        <h1 id='room-header'>Welcome to the {this.props.chatData.chat.topic} Room!</h1>
+                        <h1 id='room-header'>Welcome to the {this.props.chatData.topic} Room!</h1>
                         <div id='room-sidebar'>
                             
                             <ul id='users-list'>
-                                {this.displayUsers(this.props.chatData.chat.users.data)}
+                                {this.displayUsers(this.props.chatData.users.data)}
                             </ul>
                         </div>
-                        <ChatFeed room={this.props.chatData.chat} currentUser={this.props.currentUser} />
+                        <ChatFeed room={this.props.chatData} currentUser={this.props.currentUser} chat={this.props.chatData.messages}/>
                         <form id='chat-form' onSubmit={this.submitMessage}>
                             <h3>Post a new message:</h3>
                             <textarea type='text' value={this.state.newMessage} onChange={this.handleMessageInput}></textarea>
@@ -72,12 +77,12 @@ class IndividualChatroom extends Component {
                     </div>
                 ) : null }
                 
-                <RoomWebSocket
+                {/* <RoomWebSocket
                     cableApp={this.props.cableApp}
                     updateApp={this.props.updateApp}
                     getChatData={this.props.getChatData}
                     chatData={this.props.chatData}
-                />
+                /> */}
             </div>
         )
     }

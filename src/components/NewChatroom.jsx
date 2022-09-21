@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios';
+import Button from 'react-bootstrap/Button';
+import '../App.css';
 import ActionCable from 'action-cable-react-jwt';
 
 class NewChatroom extends React.Component {
@@ -42,9 +44,9 @@ class NewChatroom extends React.Component {
 
                         </input>
                 
-                <button>
+                <Button variant='primary'>
                     Create New Chatroom
-                </button>
+                </Button>
                 </form>
             </div>
         )
