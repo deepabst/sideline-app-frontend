@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 import '../App.css';
 import ActionCable from 'action-cable-react-jwt';
 
@@ -39,15 +40,18 @@ class NewChatroom extends React.Component {
 
         return (
             <div>
-                <form onSubmit={this.handleSubmit}>
-                        <input type= "text" onChange={this.handleInput} >
-
-                        </input>
-                
-                <Button variant='primary'>
+                <Form onSubmit={this.handleSubmit}>
+                    <Form.Group className='mb-3' controlId='formBasicText'>
+                        <Form.Control
+                        type= "text" onChange={this.handleInput} 
+                        placeholder='enter a chat topic'
+                        />
+                    </Form.Group>
+                <Button variant='primary' type='submit'>
                     Create New Chatroom
                 </Button>
-                </form>
+                
+                </Form>
             </div>
         )
     }

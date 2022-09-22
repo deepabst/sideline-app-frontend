@@ -23,7 +23,7 @@ class ChatFeed extends Component {
                     { this.props.chat.messages ? (
                         this.displayMessages(this.props.chat.messages)
                     ) : (
-                        <h3>This room has no messages yet - be the first to post!</h3>
+                        <h3>Be the first person to leave a message!</h3>
                     ) }
                 </div>
             </div>

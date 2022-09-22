@@ -1,3 +1,4 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import axios from 'axios';
 import ActionCable from 'action-cable-react-jwt';
@@ -130,7 +131,7 @@ class App extends React.Component {
                 render={(props) => <TeamEdit user={this.state.currentUser}{...props} />} />
               <Route exact path="/players/:id" component={PlayerProfile} />
               <Route exact path="/players/:id/edit" component={PlayerEdit} />
-              <Route exact path="/chatrooms" component={ Chatrooms }/>
+              <Route exact path="/chatrooms" render={(props) => <Chatrooms user={this.state.currentUser}{...props} />} />
               {/* <Route exact path="/chatrooms/:id" component={IndividualChatroom} /> */}
 
             </div>

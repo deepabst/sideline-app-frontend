@@ -70,7 +70,7 @@ class Players extends React.Component {
                                 }
                             </ul>
                     }
-                    <h2> Add a player </h2>
+                    <h2> Add a player <img src="https://media.istockphoto.com/vectors/boy-playing-basketball-vector-id855658172?k=20&m=855658172&s=612x612&w=0&h=1Ut0aqmHKFvQ9wA_5w8ha3p3qWR7F_8kp-8oCm83B_k=" alt="kid-player" width='50' height='45'/> </h2>
                     <PlayersForm onSubmit={this.postPlayer} />
             </div>
         );

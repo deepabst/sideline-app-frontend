@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ChatFeed from './ChatFeed';
 import RoomWebSocket from './RoomWebSocket';
+import WebFont from 'webfontloader';
 
 class IndividualChatroom extends Component {
     constructor() {
@@ -11,7 +12,7 @@ class IndividualChatroom extends Component {
     }
 
     displayUsers = (users) => {
-        return 'user'
+         // return 'user'
         // return users.map( user => {
         //     return <li key={user.id}>{user.username}</li>
         // })
@@ -32,8 +33,8 @@ class IndividualChatroom extends Component {
 
         const message = {
             content: this.state.newMessage,
-            user_id: this.props.currentUser.id,
-            chat_id: this.props.chatData.chat.id
+            // user_id: this.props.currentUser.id,
+            chat_id: this.props.chatData.id
         }
 
         fetch("http://localhost:3000/messages", {
@@ -72,7 +73,7 @@ class IndividualChatroom extends Component {
                             <h3>Post a new message:</h3>
                             <textarea type='text' value={this.state.newMessage} onChange={this.handleMessageInput}></textarea>
                             <br></br>
-                            <input type='submit'></input>
+                            <input type='submit' value="Send Message"></input>
                         </form>
                     </div>
                 ) : null }

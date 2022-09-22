@@ -34,11 +34,23 @@ class Chatrooms extends React.Component {
         })
     }//getChats
 
-    fakeData = {chat: {
-        topic: 'fake',
-        users: [],
-        messages: [{id: 3, content: 'hello', chat_id: 1, user_id: 2}, {id: 4, content: 'helloha', chat_id: 2, user_id: 4}]}
-    }
+    // fakeData = {chat: {
+    //     topic: 'fake',
+    //     users: [],
+    //     messages: [{id: 3, content: 'hello', chat_id: 1, user_id: 2}, {id: 4, content: 'helloha', chat_id: 2, user_id: 4}]}
+    // }
+
+    // getRoomDetailsByTopic = (topic) => {
+    //     axios.get( `http://localhost:3000/chats/${topic}` )
+    //     .then( res => {
+    //         console.log(`individualChatroom:`, res.data); 
+    //         this.setState({chatrooms: res.data})
+            
+    //     })
+    //     .catch( err => {console.error('Loading error: ', err)
+            
+    //     })
+    // }
 
     postChatroom = async (text) => {
         console.log('Chatrooms::postChatroom()', text)
@@ -76,10 +88,11 @@ class Chatrooms extends React.Component {
                             <p>Loading chatrooms...</p>
                             :           
                 <ul>
+                
                     {this.state.chatrooms.map (c =>
-                    <li key={c.id}><Link to={`/chatrooms/${c.id}`}>{c.topic}</Link> <IndividualChatroom chatData={c}/></li> 
-                    
+                    <li key={c.id} id='room-list'><Link to={`/chatrooms/${c.id}`}><img src="https://miro.medium.com/max/1400/1*ienXn8jgAJcTMoze9nIoEg.png" alt="chat" width='50' height='45'/>{c.topic} </Link><IndividualChatroom chatData={c}/></li> 
                     )}
+                
                 </ul>
                 }
                 

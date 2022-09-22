@@ -39,11 +39,19 @@
 
 nav {
   display: block;
-  background-color: black;
+  background-color: rgb(35, 12, 214);
+  background-image: url('https://images.thewest.com.au/publication/B881163875Z/1554859203974_GTA25IBRV.2-2.jpg?imwidth=810&impolicy=wan_v3');
+  background-position: center;
+  
 }
 
 nav ul {
   margin: 0;
+  overflow: hidden;
+  text-align: center;
+  font-size: 16px;
+  display: block;
+  transition: 1s;
 }
 
 nav li {
@@ -57,6 +65,10 @@ nav li {
 nav li a {
   text-decoration: none;
   color: white;
+}
+nav ul:hover {
+  transform: scale(1.0);
+  background: rgba(46, 108, 13, 0.3);
 }
 
 #home-page {
@@ -152,4 +164,20 @@ nav li a {
 .other-user-message {
   background-color: lightgreen;
   margin-left: 2.5%;
+}
+
+#room-list {
+  font-size: 30px;
+  
+  margin-left: 10px;
+}
+
+ul {
+  list-style: none;
+}
+
+@media screen and (max-width: 200px) {
+  .left, .main, .right {
+    width: 100%; 
+  }
 }
