@@ -1,8 +1,12 @@
 import React from "react";
 import axios from "axios";
 
-const BACKEND_BASE_URL = 'http://localhost:3000/stats'
-
+let BASE_URL;
+if( process.env.NODE_ENV === 'development'){
+  BASE_URL = 'http://localhost:3000/stats';
+} else {
+  BASE_URL = 'https://sidelines-app.herokuapp.com/stats';
+}
 class StatProfile extends React.Component {
 
     state = {
@@ -13,7 +17,7 @@ class StatProfile extends React.Component {
 
     fetchStat = async (id) => {
         try {
-            const res = await axios.get(BACKEND_BASE_URL + '/' + id);
+            const res = await axios.get(BASE_URL + '/' + id);
             this.setState({
                 stat: res.data,
                 loading: false
@@ -31,7 +35,7 @@ class StatProfile extends React.Component {
         console.log('delete stat ->', this.state.stat.id)
         try {
             // send request to delete
-            await axios.delete(BACKEND_BASE_URL + '/' + this.state.stat.id);
+            await axios.delete(BASE_URL + '/' + this.state.stat.id);
             // redirect to the players index
             this.props.history.push(`/stats`)
         } catch (error) {

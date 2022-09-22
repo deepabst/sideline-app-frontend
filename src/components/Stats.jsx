@@ -3,7 +3,13 @@ import { Link } from 'react-router-dom';
 import axios from "axios";
 import StatForm from "./StatForm";
 
-const BACKEND_BASE_URL = 'http://localhost:3000/stats'
+let BASE_URL;
+if( process.env.NODE_ENV === 'development'){
+  BASE_URL = 'http://localhost:3000/stats';
+} else {
+  BASE_URL = 'https://sidelines-app.herokuapp.com/stats';
+}
+
 
 function StatLine(props) {
     return (
@@ -30,7 +36,7 @@ class Stats extends React.Component {
     fetchStats = async () => {
         console.log("Running fetch Stats...")
         try {
-            const res = await axios.get(BACKEND_BASE_URL);
+            const res = await axios.get(BASE_URL);
             this.setState({
                 stats: res.data,
                 loading: false
@@ -43,7 +49,7 @@ class Stats extends React.Component {
     postStat = async (name) => {
         console.log('Players::postStat()', name);
         try {
-            const res = await axios.post(BACKEND_BASE_URL, {
+            const res = await axios.post(BASE_URL, {
                 name
             });
             console.log('POST response:', res.data);

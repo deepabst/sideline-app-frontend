@@ -3,7 +3,12 @@ import React from "react";
 import PlayersForm from "./PlayersForm";
 import { Link } from 'react-router-dom';
 
-const BACKEND_BASE_URL = 'http://localhost:3000/players'
+let BASE_URL;
+if( process.env.NODE_ENV === 'development'){
+  BASE_URL = 'http://localhost:3000/players';
+} else {
+  BASE_URL = 'https://sidelines-app.herokuapp.com/players';
+}
 
 function PlayerLine(props) {
     return (
@@ -29,7 +34,7 @@ class Players extends React.Component {
 
     fetchPlayers = async () => {
         try {
-            const res = await axios.get(BACKEND_BASE_URL);
+            const res = await axios.get(BASE_URL);
             this.setState({
                 players: res.data,
                 loading: false
@@ -42,7 +47,7 @@ class Players extends React.Component {
     postPlayer = async (name, number) => {
         console.log('Players::postPlayer()', name, number);
         try {
-            const res = await axios.post(BACKEND_BASE_URL, {
+            const res = await axios.post(BASE_URL, {
                 name,
                 number
             });

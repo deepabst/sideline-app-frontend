@@ -1,7 +1,12 @@
 import React from "react";
 import axios from "axios";
 
-const BACKEND_BASE_URL = 'http://localhost:3000/teams'
+let BASE_URL;
+if( process.env.NODE_ENV === 'development'){
+  BASE_URL = 'http://localhost:3000/teams';
+} else {
+  BASE_URL = 'https://sidelines-app.herokuapp.com/teams';
+}
 
 class TeamEdit extends React.Component {
     state = {
@@ -15,7 +20,7 @@ class TeamEdit extends React.Component {
 
     fetchTeam = async (id) => {
         try {
-            const res = await axios.get(BACKEND_BASE_URL + '/' + id);
+            const res = await axios.get(BASE_URL + '/' + id);
             this.setState({
                 team: res.data,
                 loading: false
@@ -35,7 +40,7 @@ class TeamEdit extends React.Component {
         const id = this.props.match.params.id;
         console.log('teams::updateTeam()', name);
         try {
-            const res = await axios.put(BACKEND_BASE_URL+ '/' + id, {
+            const res = await axios.put(BASE_URL+ '/' + id, {
                 name
             });
             console.log('PUT response:', res.data);

@@ -3,6 +3,13 @@ import ChatFeed from './ChatFeed';
 import RoomWebSocket from './RoomWebSocket';
 import WebFont from 'webfontloader';
 
+let BASE_URL;
+if( process.env.NODE_ENV === 'development'){
+  BASE_URL = 'http://localhost:3000/messages';
+} else {
+  BASE_URL = 'https://sidelines-app.herokuapp.com/messages';
+}
+
 class IndividualChatroom extends Component {
     constructor() {
         super()
@@ -37,7 +44,7 @@ class IndividualChatroom extends Component {
             chat_id: this.props.chatData.id
         }
 
-        fetch("http://localhost:3000/messages", {
+        fetch(BASE_URL, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

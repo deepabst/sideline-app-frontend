@@ -3,8 +3,12 @@ import axios from "axios";
 import { Link } from 'react-router-dom';
 import TeamForm from "./TeamForm";
 
-const BACKEND_BASE_URL = 'http://localhost:3000/teams'
-
+let BASE_URL;
+if( process.env.NODE_ENV === 'development'){
+  BASE_URL = 'http://localhost:3000/teams';
+} else {
+  BASE_URL = 'https://sidelines-app.herokuapp.com/teams';
+}
 
 function TeamLine(props) {
     return (
@@ -30,7 +34,7 @@ class Teams extends React.Component {
 
     fetchTeams = async () => {
         try {
-            const res = await axios.get(BACKEND_BASE_URL);
+            const res = await axios.get(BASE_URL);
             this.setState({
                 teams: res.data,
                 loading: false
@@ -44,7 +48,7 @@ class Teams extends React.Component {
     postTeam = async (name) => {
         console.log('Players::postTeam()', name);
         try {
-            const res = await axios.post(BACKEND_BASE_URL, {
+            const res = await axios.post(BASE_URL, {
                 name
             });
             console.log('POST response:', res.data);

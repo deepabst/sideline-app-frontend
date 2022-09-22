@@ -1,7 +1,12 @@
 import React from 'react';
 import axios from 'axios';
 
-const BASE_URL = "http://localhost:3000";
+let BASE_URL;
+if( process.env.NODE_ENV === 'development'){
+  BASE_URL = 'http://localhost:3000/';
+} else {
+  BASE_URL = 'https://sidelines-app.herokuapp.com/';
+}
 
 class Login extends React.Component {
 
@@ -31,7 +36,7 @@ class Login extends React.Component {
         const request = { 'email': this.state.email, 'password': this.state.password }
 
         // do an axios post request to send user details to rails
-        axios.post(`${BASE_URL}/user_token`, { auth: request })
+        axios.post(`${BASE_URL}user_token`, { auth: request })
             .then(result => {
                 localStorage.setItem("jwt", result.data.jwt)
                 this.props.setCurrentUser();
