@@ -1,70 +1,66 @@
-# Getting Started with Create React App
+# SIDELINES
+![sidelines logo](src/images/sidelines_logo.png)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Chat and track stats at the game
+---
 
-## Available Scripts
+Link - [SIDELINES Live Site](https://deepabst.github.io/sideline-app-frontend/#/)
 
-In the project directory, you can run:
+Link - [Backend Repo](https://github.com/rainpyr/real-time-chat)
 
-### `npm start`
+### Description
+This app aspires to be loaded on every phone at Saturday morning sport matches. Spectating parents, coaches or friends can track thier favourite teams or players stats while chatting online with other stat gatherers or those who couldn't make it to the game.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Background
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Software Engineer Immersive course group project 2 - built during week 9 of 12 at General Assembly Sydney. After 1 week of exposure to React and 8 weeks total coding experience.
+Our task- build a full web app from front to back.
+A project full of firsts! This was our first go at version control in a team setting, managing git branches and merge conflicts on the fly. Our first time attempting realtime data transfer via websockets. It was also a first time getting a login to work from a react front end to a rails backend.
 
-### `npm test`
+### Main features
+Login/logout - React FrontEnd to Rails Backend using knock and jwt
+Teams Players Stats - Create Read Update and Delete
+Create Chatrooms
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Screenshots
+Data models
+![data structure diagram](src/images/data_structure.png)
 
-### `npm run build`
+### Libraries
+- action-cable-react-jwt
+- axios
+- bootstrap
+- gh-pages
+- react
+- react-bootstrap
+- react-dom
+- react-router-dom
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Deploy locally
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Start the backend first (details here -> [Link](https://github.com/rainpyr/real-time-chat) )
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+$ `npm install`
 
-### `npm run eject`
+$ `npm start`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Production Deployment - Dev Ops
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+$ `npm run deploy` - deploy to GitHub Pages
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+### Known bugs
+websockets connection not working yet
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Wishlist
+- match day stat tracking (register via QR code onsite)
+- live action ticker
+- mobile friendly design
+- offline mode for poor connectivity
+- google sign up / login
+- undo stats function to de-duplicate
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Contributors
+- [Eva Peng](https://github.com/rainpyr)
+- [Dee Pabst](https://github.com/deepabst)
