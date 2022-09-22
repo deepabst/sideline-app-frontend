@@ -1,7 +1,12 @@
 import React from "react";
 import axios from "axios";
 
-const BACKEND_BASE_URL = 'http://localhost:3000/players'
+let BASE_URL;
+if( process.env.NODE_ENV === 'development'){
+  BASE_URL = 'http://localhost:3000/players';
+} else {
+  BASE_URL = 'https://sidelines-app.herokuapp.com/players';
+}
 
 class PlayerProfile extends React.Component {
 
@@ -14,7 +19,7 @@ class PlayerProfile extends React.Component {
 
     fetchPlayer = async (id) => {
         try {
-            const res = await axios.get(BACKEND_BASE_URL + '/' + id);
+            const res = await axios.get(BASE_URL + '/' + id);
             this.setState({
                 player: res.data,
                 loading: false
@@ -32,7 +37,7 @@ class PlayerProfile extends React.Component {
         console.log('delete player ->', this.state.player.id)
         try {
             // send request to delete
-            await axios.delete(BACKEND_BASE_URL + '/' + this.state.player.id);
+            await axios.delete(BASE_URL + '/' + this.state.player.id);
             // redirect to the players index
             this.props.history.push(`/players`)
         } catch (error) {

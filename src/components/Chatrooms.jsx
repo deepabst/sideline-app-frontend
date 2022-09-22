@@ -5,7 +5,12 @@ import ActionCable from 'action-cable-react-jwt';
 import IndividualChatroom from './IndividualChatroom';
 import { Route, HashRouter as Router, Link } from 'react-router-dom'
 
-const RAILS_CHATS_BASE_URL = 'http://localhost:3000/chats'
+let BASE_URL;
+if( process.env.NODE_ENV === 'development'){
+  BASE_URL = 'http://localhost:3000/chats';
+} else {
+  BASE_URL = 'https://sidelines-app.herokuapp.com/chats';
+}
 
 class Chatrooms extends React.Component {
 
@@ -23,7 +28,7 @@ class Chatrooms extends React.Component {
     }
 
     getChats = () => {
-        axios.get( RAILS_CHATS_BASE_URL )
+        axios.get( BASE_URL )
         .then( res => {
  //           console.log(`Chattooms:`, res.data); 
             this.setState({chatrooms: res.data})
@@ -38,7 +43,7 @@ class Chatrooms extends React.Component {
         console.log('Chatrooms::postChatroom()', text)
         try {
             const res = await axios.post
-            (RAILS_CHATS_BASE_URL, {
+            (BASE_URL, {
                 
                 topic: text
                 });

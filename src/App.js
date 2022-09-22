@@ -20,7 +20,12 @@ import Stats from './components/Stats';
 import StatProfile from './components/StatProfile';
 import StatEdit from './components/StatEdit';
 
-const BASE_URL = 'http://localhost:3000';
+let BASE_URL;
+if( process.env.NODE_ENV === 'development'){
+  BASE_URL = 'http://localhost:3000';
+} else {
+  BASE_URL = 'https://sidelines-app.herokuapp.com/';
+}
 
 class App extends React.Component {
 

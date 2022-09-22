@@ -1,7 +1,12 @@
 import React from "react";
 import axios from "axios";
 
-const BACKEND_BASE_URL = 'http://localhost:3000/teams'
+let BASE_URL;
+if( process.env.NODE_ENV === 'development'){
+  BASE_URL = 'http://localhost:3000/teams';
+} else {
+  BASE_URL = 'https://sidelines-app.herokuapp.com/teams';
+}
 
 class TeamProfile extends React.Component {
 
@@ -13,7 +18,8 @@ class TeamProfile extends React.Component {
 
     fetchTeam = async (id) => {
         try {
-            const res = await axios.get(BACKEND_BASE_URL + '/' + id);
+            const res = await axios.get(BASE_URL + '/' + id);
+            
             this.setState({
                 team: res.data,
                 loading: false
@@ -31,7 +37,8 @@ class TeamProfile extends React.Component {
         console.log('delete team ->', this.state.team.id)
         try {
             // send request to delete
-            await axios.delete(BACKEND_BASE_URL + '/' + this.state.team.id);
+            await axios.delete(BASE_URL + '/' + this.state.team.id);
+            
             // redirect to the teams index
             this.props.history.push(`/teams`)
         } catch (error) {
