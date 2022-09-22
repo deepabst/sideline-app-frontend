@@ -29,7 +29,7 @@ if( process.env.NODE_ENV === 'development'){
   WS_URL = 'ws://localhost:3000/cable';
 } else {
   BASE_URL = 'https://sidelines-app.herokuapp.com/';
-  WS_URL = 'ws://sidelines-app.herokuapp.com/cable';
+  WS_URL = 'wss://sidelines-app.herokuapp.com/cable';
 }
 
 class App extends React.Component {
