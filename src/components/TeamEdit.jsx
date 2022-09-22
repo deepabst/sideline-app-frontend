@@ -43,7 +43,6 @@ class TeamEdit extends React.Component {
             const res = await axios.put(BASE_URL+ '/' + id, {
                 name
             });
-            console.log('PUT response:', res.data);
             // redirect to the team show page
             this.props.history.push(`/teams/${this.props.match.params.id}`)
         } catch (error) {
