@@ -17,17 +17,19 @@ import Teams from './components/Teams';
 import TeamProfile from './components/TeamProfile';
 import TeamEdit from './components/TeamEdit';
 import Chatrooms from './components/Chatrooms';
-import IndividualChatroom from './components/IndividualChatroom';
 
 import Stats from './components/Stats';
 import StatProfile from './components/StatProfile';
 import StatEdit from './components/StatEdit';
 
 let BASE_URL;
+let WS_URL;
 if( process.env.NODE_ENV === 'development'){
   BASE_URL = 'http://localhost:3000';
+  WS_URL = 'ws://localhost:3000/cable';
 } else {
   BASE_URL = 'https://sidelines-app.herokuapp.com/';
+  WS_URL = 'ws://sidelines-app.herokuapp.com/cable';
 }
 
 class App extends React.Component {
@@ -51,7 +53,7 @@ class App extends React.Component {
     // this is an example using localStorage
     const yourToken = localStorage.getItem("jwt") // check with Luke whether we have to get separate token
     let App = {}
-    App.cable = ActionCable.createConsumer('ws://localhost:3000/cable', yourToken)
+    App.cable = ActionCable.createConsumer(WS_URL, yourToken)
     const subscription = App.cable.subscriptions.create({channel: 'ChatChannel'}, {
       connected: () => {},
       disconnected: () => {},
@@ -149,8 +151,6 @@ class App extends React.Component {
               <Route exact path="/players/:id" component={PlayerProfile} />
               <Route exact path="/players/:id/edit" component={PlayerEdit} />
               <Route exact path="/chatrooms" render={(props) => <Chatrooms user={this.state.currentUser}{...props} />} />
-              {/* <Route exact path="/chatrooms/:id" component={IndividualChatroom} /> */}
-
             </div>
           )
         }
