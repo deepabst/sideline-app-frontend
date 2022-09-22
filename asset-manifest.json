@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/sideline-app-frontend/static/css/main.585c6ed7.css",
-    "main.js": "/sideline-app-frontend/static/js/main.69ba78d7.js",
+    "main.js": "/sideline-app-frontend/static/js/main.4e552003.js",
     "index.html": "/sideline-app-frontend/index.html",
     "main.585c6ed7.css.map": "/sideline-app-frontend/static/css/main.585c6ed7.css.map",
-    "main.69ba78d7.js.map": "/sideline-app-frontend/static/js/main.69ba78d7.js.map"
+    "main.4e552003.js.map": "/sideline-app-frontend/static/js/main.4e552003.js.map"
   },
   "entrypoints": [
     "static/css/main.585c6ed7.css",
-    "static/js/main.69ba78d7.js"
+    "static/js/main.4e552003.js"
   ]
 }
