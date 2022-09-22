@@ -1,5 +1,8 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import axios from 'axios';
+import ActionCable from 'action-cable-react-jwt';
+import Button from 'react-bootstrap/Button';
 // eslint-disable-next-line
 import { Route, Link, HashRouter as Router, Routes } from 'react-router-dom';
 
@@ -35,6 +38,22 @@ class App extends React.Component {
   componentDidMount() {
     //This is a function that will load once when you load the website. We just want to check if the user is logged in when we visit so we'll pass in the setCurrentUser function.
     this.setCurrentUser();
+    this.createSocket();
+  }
+
+  createSocket = () => {
+    // get your JWT token
+    // this is an example using localStorage
+    const yourToken = localStorage.getItem("jwt") // check with Luke whether we have to get separate token
+    let App = {}
+    App.cable = ActionCable.createConsumer('ws://localhost:3000/cable', yourToken)
+    const subscription = App.cable.subscriptions.create({channel: 'ChatChannel'}, {
+      connected: () => {},
+      disconnected: () => {},
+      received: (data) => { 
+        console.log(data) 
+      }
+    })
   }
 
   // function to set the state to the current logged in user
@@ -123,8 +142,8 @@ class App extends React.Component {
                 render={(props) => <StatEdit user={this.state.currentUser}{...props} />} />
               <Route exact path="/players/:id" component={PlayerProfile} />
               <Route exact path="/players/:id/edit" component={PlayerEdit} />
-              <Route exact path="/chatrooms" component={ Chatrooms }/>
-              <Route exact path="/chatrooms/:id" component={IndividualChatroom} />
+              <Route exact path="/chatrooms" render={(props) => <Chatrooms user={this.state.currentUser}{...props} />} />
+              {/* <Route exact path="/chatrooms/:id" component={IndividualChatroom} /> */}
 
             </div>
           )

@@ -5,7 +5,7 @@ import ActionCable from 'action-cable-react-jwt';
 import IndividualChatroom from './IndividualChatroom';
 import { Route, HashRouter as Router, Link } from 'react-router-dom'
 
-const RAILS_CHATS_BASE_URL = 'http://localhost:3000/chats'
+const RAILS_CHATS_BASE_URL = 'http://localhost:3000/chats/'
 
 class Chatrooms extends React.Component {
 
@@ -25,14 +25,32 @@ class Chatrooms extends React.Component {
     getChats = () => {
         axios.get( RAILS_CHATS_BASE_URL )
         .then( res => {
- //           console.log(`Chattooms:`, res.data); 
-            this.setState({chatrooms: res.data})
+ //           console.log(); 
+            this.setState({chatrooms: res.data, loading: false})
             
         })
         .catch( err => {console.error('Loading error: ', err)
             
         })
     }//getChats
+
+    // fakeData = {chat: {
+    //     topic: 'fake',
+    //     users: [],
+    //     messages: [{id: 3, content: 'hello', chat_id: 1, user_id: 2}, {id: 4, content: 'helloha', chat_id: 2, user_id: 4}]}
+    // }
+
+    // getRoomDetailsByTopic = (topic) => {
+    //     axios.get( `http://localhost:3000/chats/${topic}` )
+    //     .then( res => {
+    //         console.log(`individualChatroom:`, res.data); 
+    //         this.setState({chatrooms: res.data})
+            
+    //     })
+    //     .catch( err => {console.error('Loading error: ', err)
+            
+    //     })
+    // }
 
     postChatroom = async (text) => {
         console.log('Chatrooms::postChatroom()', text)
@@ -65,12 +83,18 @@ class Chatrooms extends React.Component {
             <div>
                 <NewChatroom onSubmit={this.postChatroom}/>
                 
-            
+                {this.state.loading
+                            ?
+                            <p>Loading chatrooms...</p>
+                            :           
                 <ul>
+                
                     {this.state.chatrooms.map (c =>
-                    <li key={c.id}><Link to={`/chatrooms/${c.id}`}>{c.topic}</Link> Created by {c.user}</li> 
-                     )}
+                    <li key={c.id} id='room-list'><Link to={`/chatrooms/${c.id}`}><img src="https://miro.medium.com/max/1400/1*ienXn8jgAJcTMoze9nIoEg.png" alt="chat" width='50' height='45'/>{c.topic} </Link><IndividualChatroom chatData={c}/></li> 
+                    )}
+                
                 </ul>
+                }
                 
             </div>
         

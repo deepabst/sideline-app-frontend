@@ -72,7 +72,7 @@ class Teams extends React.Component {
                             }
                         </ul>
                 }
-                <h2>Add a Team</h2>
+                <h2>Add a Team <img src="https://cdn.shopify.com/s/files/1/1478/7710/products/YOURNAME-q_900x.jpg?v=1598592889" alt="team-jersy" width='50' height='40' /></h2>
                 <TeamForm onSubmit={this.postTeam} />
             </div>
         );//return
