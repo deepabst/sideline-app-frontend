@@ -9,7 +9,7 @@ class ChatFeed extends Component {
 
     displayMessages = (messages) => {
         return messages.map(message => {
-            const avatar = this.whichAvatar(message)
+            
             return <ChatMessage key={message.id} message={message} currentUser={this.props.currentUser}/>
         }) 
     }
@@ -18,12 +18,12 @@ class ChatFeed extends Component {
     render() {
         return (
             <div id='chat-feed'>
-                <h3>Chat Feed:</h3>
+                <h5>Chat Feed:</h5>
                 <div id='messages'>
                     { this.props.chat.messages ? (
                         this.displayMessages(this.props.chat.messages)
                     ) : (
-                        <h3>Be the first person to leave a message!</h3>
+                        <h6>please leave your meesage</h6>
                     ) }
                 </div>
             </div>

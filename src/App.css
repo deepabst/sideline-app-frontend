@@ -111,8 +111,9 @@ nav ul:hover {
 
 #room-header {
   grid-area: room-header;
-  margin: auto;
+  margin: 0 0 0 20;
   padding: 2.5%;
+  color: rgb(24, 121, 232);
 }
 
 #room-sidebar {

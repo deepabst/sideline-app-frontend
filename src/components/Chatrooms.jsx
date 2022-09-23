@@ -95,7 +95,7 @@ class Chatrooms extends React.Component {
                 <ul>
                 
                     {this.state.chatrooms.map (c =>
-                    <li key={c.id} id='room-list'><Link to={`/chatrooms/${c.id}`}><img src="https://miro.medium.com/max/1400/1*ienXn8jgAJcTMoze9nIoEg.png" alt="chat" width='50' height='45'/>{c.topic} </Link><IndividualChatroom chatData={c}/></li> 
+                    <li key={c.id} id='room-list'><br></br><Link to={`/chatrooms/${c.id}`}><img src="https://miro.medium.com/max/1400/1*ienXn8jgAJcTMoze9nIoEg.png" alt="chat" width='50' height='45'/>{c.topic}</Link><IndividualChatroom chatData={c}/></li> 
                     )}
                 
                 </ul>

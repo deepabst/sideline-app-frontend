@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ChatFeed from './ChatFeed';
 import RoomWebSocket from './RoomWebSocket';
-import WebFont from 'webfontloader';
+import Button from 'react-bootstrap/Button';
 
 let BASE_URL;
 if( process.env.NODE_ENV === 'development'){
@@ -14,7 +14,8 @@ class IndividualChatroom extends Component {
     constructor() {
         super()
         this.state = {
-            newMessage: ''
+            newMessage: '',
+            messages: ''
         }
     }
 
@@ -50,7 +51,7 @@ class IndividualChatroom extends Component {
                 "Content-Type": "application/json",
                 Accept: "application/json"
             },
-            content: JSON.stringify({message: message})
+            content: {message: message}
         })
         .then(resp => resp.json())
         .then(result => {
@@ -68,7 +69,7 @@ class IndividualChatroom extends Component {
                 { Object.keys(this.props.chatData).length > 0 ? (
                     
                     <div id='room-show'>
-                        <h1 id='room-header'>Welcome to the {this.props.chatData.topic} Room!</h1>
+                        <h4 id='room-header'>Welcome to <strong><em>{this.props.chatData.topic}</em></strong> {' '}Room!</h4>
                         <div id='room-sidebar'>
                             
                             <ul id='users-list'>
@@ -77,10 +78,12 @@ class IndividualChatroom extends Component {
                         </div>
                         <ChatFeed room={this.props.chatData} currentUser={this.props.currentUser} chat={this.props.chatData.messages}/>
                         <form id='chat-form' onSubmit={this.submitMessage}>
-                            <h3>Post a new message:</h3>
+                            <h6>Post a new message:</h6>
                             <textarea type='text' value={this.state.newMessage} onChange={this.handleMessageInput}></textarea>
                             <br></br>
-                            <input type='submit' value="Send Message"></input>
+                            <Button variant='primary' type='submit'>
+                                Send Message
+                            </Button>
                         </form>
                     </div>
                 ) : null }
