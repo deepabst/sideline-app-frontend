@@ -4,6 +4,7 @@ import ActionCable from 'action-cable-react-jwt';
 import 'bootstrap/dist/css/bootstrap.min.css';
 // eslint-disable-next-line
 import { Route, Link, HashRouter as Router } from 'react-router-dom';
+
 // knock Login
 import Login from './components/Login'
 import MyProfile from './components/MyProfile'
@@ -31,9 +32,18 @@ import MatchEdit from './components/MatchEdit';
 //Chatrooms
 import Chatrooms from './components/Chatrooms';
 
+// Bootstrap
+import Image from 'react-bootstrap/Image'
+import logo from './images/sidelines_logo.png'
+import Button from 'react-bootstrap/Button';
+import Offcanvas from 'react-bootstrap/Offcanvas';
+import Nav from 'react-bootstrap/Nav';
+import Container from 'react-bootstrap/Container';
+import Navbar from 'react-bootstrap/Navbar';
+
 let BASE_URL;
 let WS_URL;
-if( process.env.NODE_ENV === 'development'){
+if (process.env.NODE_ENV === 'development') {
   BASE_URL = 'http://localhost:3000';
   WS_URL = 'ws://localhost:3000/cable';
 } else {
@@ -49,6 +59,7 @@ class App extends React.Component {
     // Not the best way as we hold on to sensitive data like email and password digest.
     currentUser: {},
     cable: null
+    show: false
   }
 
   // function to run on component mounting
@@ -65,13 +76,7 @@ class App extends React.Component {
     let App = {}
     App.cable = ActionCable.createConsumer(WS_URL, yourToken)
     this.setState({cable: App.cable})
-    // const subscription = App.cable.subscriptions.create({channel: 'ChatsChannel'}, {
-    //   connected: () => {},
-    //   disconnected: () => {},
-    //   received: (data) => { 
-    //     console.log('broadcastMessagefrom ChatsChannel', data) 
-    //   }
-    // })
+    
   }
 
   // function to set the state to the current logged in user
@@ -106,41 +111,58 @@ class App extends React.Component {
     this.setState({ currentUser: {} });
     localStorage.removeItem("jwt");
     axios.defaults.headers.common['Authorization'] = undefined;
+    this.toggleShowNav();
 
+  }
+
+  toggleShowNav = () => {
+    const newValue = !this.state.show
+    this.setState({ show: newValue })
   }
 
   render() {
     return (
       <Router>
-        <header>
-          <nav>
-          <h1>SIDELINES</h1>
-            {/* Show either logged in or logged out nav bar */}
-            {
-              this.state.currentUser.username !== undefined
-                ?
-                (
-                  <ul>
-                    <li>Welcome {this.state.currentUser.username}</li>
-                    <li><Link to="/my_profile">My Profile</Link></li>
-                    <li><Link to="/players">Players</Link></li>
-                    <li><Link to="/teams">Teams</Link></li>
-                    <li><Link to="/chatrooms">Chatrooms</Link></li>
-                    <li><Link to="/stats">Stats</Link></li>
-                    <li><Link to="/matches">Matches</Link></li>
-                    <li><Link onClick={this.handleLogout} to='/'>Logout</Link></li>
-                  </ul>
-                )
-                :
-                (
-                  <ul>
-                    <li><Link to="/login">Login</Link></li>
-                  </ul>
-                )
-            }
-          </nav>
-          <hr />
-        </header>
+        <Navbar key={'sm'} bg="dark" expand={'sm'} className="mb-3" variant="dark">
+          <Container fluid>
+            <Navbar.Brand href="#">SIDELINES</Navbar.Brand>
+            <Navbar.Toggle onClick={this.toggleShowNav} />
+            <Navbar.Offcanvas
+              placement="start"
+              show={this.state.show}
+            >
+              <Offcanvas.Header>
+                <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${'sm'}`}>
+                  Menu
+                </Offcanvas.Title>
+                <Button variant="outline-dark" onClick={this.toggleShowNav}> X </Button>
+              </Offcanvas.Header>
+              <Offcanvas.Body>
+                {this.state.currentUser.username !== undefined
+                  ?
+                  <Nav className="justify-content-end flex-grow-1 pe-3">
+                    <Navbar.Text>
+                      Welcome {this.state.currentUser.username}
+                    </Navbar.Text>
+                    <Nav.Link as={Link} to="/" onClick={this.toggleShowNav}>Home</Nav.Link>
+                    <Nav.Link as={Link} to="/my_profile" onClick={this.toggleShowNav}>My Profile</Nav.Link>
+                    <Nav.Link as={Link} to="/players" onClick={this.toggleShowNav}>Players</Nav.Link>
+                    <Nav.Link as={Link} to="/teams" onClick={this.toggleShowNav}>Teams</Nav.Link>
+                    <Nav.Link as={Link} to="/chatrooms" onClick={this.toggleShowNav}>Chatrooms</Nav.Link>
+                    <Nav.Link as={Link} to="/stats" onClick={this.toggleShowNav}>Stats</Nav.Link>
+                    <Nav.Link as={Link} to="/matches" onClick={this.toggleShowNav}>Matches</Nav.Link>
+                    <Nav.Link as={Link} to="/" onClick={this.handleLogout}>Logout</Nav.Link>
+                  </Nav>
+                  :
+                  <Nav className="justify-content-end flex-grow-1 pe-3">
+                    <Nav.Link as={Link} to="/login" onClick={this.toggleShowNav}>Login</Nav.Link>
+                  </Nav>
+                }
+              </Offcanvas.Body>
+            </Navbar.Offcanvas>
+          </Container>
+        </Navbar>
+
         {/* if there is a user then display all the logged in links */}
         {this.state.currentUser.username &&
           (
@@ -148,21 +170,21 @@ class App extends React.Component {
               <Route exact path="/my_profile"
                 render={(props) => <MyProfile user={this.state.currentUser}{...props} />} />
 
-                {/* PLAYERS */}
+              {/* PLAYERS */}
               <Route exact path="/players"
                 render={(props) => <Players user={this.state.currentUser}{...props} />} />
               <Route exact path="/players/:id" component={PlayerProfile} />
               <Route exact path="/players/:id/edit" component={PlayerEdit} />
-              
-                {/* TEAMS */}
+
+              {/* TEAMS */}
               <Route exact path="/teams"
                 render={(props) => <Teams user={this.state.currentUser}{...props} />} />
               <Route exact path="/teams/:id"
                 render={(props) => <TeamProfile user={this.state.currentUser}{...props} />} />
               <Route exact path="/teams/:id/edit"
                 render={(props) => <TeamEdit user={this.state.currentUser}{...props} />} />
-                
-                {/* STATS */}
+
+              {/* STATS */}
               <Route exact path="/stats"
                 render={(props) => <Stats user={this.state.currentUser}{...props} />} />
               <Route exact path="/stats/:id"
@@ -193,6 +215,12 @@ class App extends React.Component {
           render={(props) => <Login setCurrentUser={this.setCurrentUser}{...props} />
           }
         />
+        {!this.state.currentUser.username && <Image src={logo} rounded fluid />}
+        <footer className="footer mt-auto bg-dark text-white">
+        <div className='container'>
+          &copy; DeEva 2022
+        </div>
+        </footer>
       </Router>
     );//return
   }// render
