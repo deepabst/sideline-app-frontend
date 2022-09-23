@@ -6,6 +6,16 @@
 
 Link - [SIDELINES Live Site](https://deepabst.github.io/sideline-app-frontend/#/)
 
+### Test User Credentials 
+user: `jwinger@ga.com`
+password: `chicken`
+
+user: `aedison@ga.com`
+password: `chicken`
+
+user: `tbarnes@ga.com`
+password: `chicken`
+
 Link - [Backend Repo](https://github.com/rainpyr/real-time-chat)
 
 ### Description
@@ -48,7 +58,6 @@ $ `npm start`
 ### Production Deployment - Dev Ops
 
 $ `npm run deploy` - deploy to GitHub Pages
-
 
 ### Known bugs
 websockets connection not working yet
