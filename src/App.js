@@ -58,7 +58,7 @@ class App extends React.Component {
     // We store a reference to the current user. I'm going the lazy route and storing the whole user as an object.
     // Not the best way as we hold on to sensitive data like email and password digest.
     currentUser: {},
-    cable: null
+    cable: null,
     show: false
   }
 
