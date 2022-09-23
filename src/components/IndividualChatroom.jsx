@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ChatFeed from './ChatFeed';
 import RoomWebSocket from './RoomWebSocket';
 import Button from 'react-bootstrap/Button';
+import axios from 'axios';
 
 let BASE_URL;
 if( process.env.NODE_ENV === 'development'){
@@ -15,9 +16,22 @@ class IndividualChatroom extends Component {
         super()
         this.state = {
             newMessage: '',
-            messages: ''
+            messages: [],
+            subscription: null
         }
     }
+
+    componentDidMount() {
+        const subscription = this.props.cable.subscriptions.create({channel: 'ChatsChannel', chat_id: this.props.chatData.id}, {
+            connected: () => {},
+            disconnected: () => {},
+            received: (data) => { 
+                // console.log('broadcastMessagefrom ChatsChannel', data)
+                this.setState({messages: [data]}) 
+            } //received
+        }); // create
+        this.setState({ subscription: subscription });
+    } // componentDidMount
 
     displayUsers = (users) => {
          // return 'user'
@@ -44,18 +58,12 @@ class IndividualChatroom extends Component {
             // user_id: this.props.currentUser.id,
             chat_id: this.props.chatData.id
         }
-
-        fetch(BASE_URL, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json"
-            },
-            content: {message: message}
-        })
-        .then(resp => resp.json())
+        // console.log('message', message)
+        
+        axios.post(BASE_URL, {message: message})
         .then(result => {
             let messageDiv = document.getElementById('messages')
+            console.log('resposne', result.data)
             messageDiv.scrollTop = messageDiv.scrollHeight
         })
     }
@@ -76,7 +84,11 @@ class IndividualChatroom extends Component {
                                 {this.displayUsers(this.props.chatData.users.data)}
                             </ul>
                         </div>
-                        <ChatFeed room={this.props.chatData} currentUser={this.props.currentUser} chat={this.props.chatData.messages}/>
+                        
+                        <ChatFeed room={this.props.chatData} 
+                        currentUser={this.props.currentUser} 
+                        chat={this.props.chatData.messages}
+                        messages={this.state.messages}/>
                         <form id='chat-form' onSubmit={this.submitMessage}>
                             <h6>Post a new message:</h6>
                             <textarea type='text' value={this.state.newMessage} onChange={this.handleMessageInput}></textarea>

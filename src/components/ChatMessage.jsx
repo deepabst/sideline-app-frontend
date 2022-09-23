@@ -14,7 +14,8 @@ class ChatMessage extends Component {
         
         return (
             <div id="chat-message" className={this.whichUser()}>
-                <h4>{this.props.message.content}</h4>
+                <h5><em>{this.props.currentUser}</em></h5>
+                <h4>{this.props.message} </h4>
                 
             </div>     
         )

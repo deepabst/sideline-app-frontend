@@ -47,7 +47,8 @@ class App extends React.Component {
   state = {
     // We store a reference to the current user. I'm going the lazy route and storing the whole user as an object.
     // Not the best way as we hold on to sensitive data like email and password digest.
-    currentUser: {}
+    currentUser: {},
+    cable: null
   }
 
   // function to run on component mounting
@@ -63,13 +64,14 @@ class App extends React.Component {
     const yourToken = localStorage.getItem("jwt") // check with Luke whether we have to get separate token
     let App = {}
     App.cable = ActionCable.createConsumer(WS_URL, yourToken)
-    const subscription = App.cable.subscriptions.create({channel: 'ChatChannel'}, {
-      connected: () => {},
-      disconnected: () => {},
-      received: (data) => { 
-        console.log(data) 
-      }
-    })
+    this.setState({cable: App.cable})
+    // const subscription = App.cable.subscriptions.create({channel: 'ChatsChannel'}, {
+    //   connected: () => {},
+    //   disconnected: () => {},
+    //   received: (data) => { 
+    //     console.log('broadcastMessagefrom ChatsChannel', data) 
+    //   }
+    // })
   }
 
   // function to set the state to the current logged in user
@@ -177,8 +179,13 @@ class App extends React.Component {
                 render={(props) => <MatchEdit user={this.state.currentUser}{...props} />} />
 
                 {/* CHATROOMS */}
-              <Route exact path="/chatrooms" render={(props) => <Chatrooms user={this.state.currentUser}{...props} />} />
-            </div>
+              {this.state.cable !== null && 
+                <Route exact path="/chatrooms" render={(props) => <Chatrooms 
+                  user={this.state.currentUser}
+                  cable={this.state.cable}
+                  {...props} />} />
+              }
+              </div>
           )
         }
         <Route
