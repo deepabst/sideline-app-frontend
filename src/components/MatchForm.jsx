@@ -1,4 +1,5 @@
 import React from "react";
+import { Form, Button, Col, Row } from "react-bootstrap";
 
 class MatchForm extends React.Component {
 
@@ -8,7 +9,7 @@ class MatchForm extends React.Component {
         start: '',
         finish: '',
         home_score: 0,
-        away_score: 0     
+        away_score: 0
     }
 
     handleSubmit = (ev) => {
@@ -23,24 +24,56 @@ class MatchForm extends React.Component {
             away_score: 0
         });
     } // handleSubmit()
-    
+
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
-                <label>Date</label>
-                <input name="date" type="date" onChange={this.props.handleInput} />
-                <label>Ground</label>
-                <input name="ground" type="text" onChange={this.props.handleInput} />
-                <label>Start Time</label>
-                <input name="start" type="time" onChange={this.props.handleInput} />
-                <label>Finish Time</label>
-                <input name="finish" type="time" onChange={this.props.handleInput} />
-                <label>Home Score</label>
-                <input name="home_score" type="number" onChange={this.props.handleInput} />
-                <label>Away Score</label>
-                <input name="away_score" type="number" onChange={this.props.handleInput} />
-                <button>Add Match</button>
-            </form>
+            <Form onSubmit={this.handleSubmit}>
+                <Row>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Date</Form.Label>
+                        <Form.Control name="date" type="date" onChange={this.props.handleInput} />
+                    </Form.Group>
+                </Row>
+                <Row>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Ground</Form.Label>
+                        <Form.Control name="ground" type="text" onChange={this.props.handleInput} />
+                    </Form.Group>
+                </Row>
+                <Row>
+                    <Col>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Start Time</Form.Label>
+                            <Form.Control name="start" type="time" onChange={this.props.handleInput} />
+                        </Form.Group>
+                    </Col>
+                    <Col>
+                        <Form.Group className="mb-3">
+                            <Form.Label>End Time</Form.Label>
+                            <Form.Control name="finish" type="time" onChange={this.props.handleInput} />
+                        </Form.Group>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Home Score</Form.Label>
+                            <Form.Control name="home_score" type="number" onChange={this.props.handleInput} />
+                        </Form.Group>
+                    </Col>
+                    <Col>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Away Score</Form.Label>
+                            <Form.Control name="away_score" type="number" onChange={this.props.handleInput} />
+                        </Form.Group>
+                    </Col>
+                </Row>
+                <Row>
+                    <Button variant="primary" type="submit">
+                        Add Match
+                    </Button>
+                </Row>
+            </Form>
         );//return
     } // render
 } // class MatchForm
