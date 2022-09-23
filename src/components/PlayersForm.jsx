@@ -1,4 +1,5 @@
 import React from "react";
+import { Form, Button } from "react-bootstrap";
 
 class PlayersForm extends React.Component {
 
@@ -25,14 +26,19 @@ class PlayersForm extends React.Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
-                <label>Name</label>
-                <input name="name" type="text" onChange={this.handleInput} />
-                {/* TODO: get available team jumper numbers only */}
-                <label>Number</label>
-                <input name="number" type="number" onChange={this.handleInput} />
-                <button>Add</button>
-            </form>
+            <Form onSubmit={this.handleSubmit}>
+                <Form.Group className="mb-3">
+                    <Form.Label>Name</Form.Label>
+                    <Form.Control name="name" type="text" placeholder="e.g. Lance Franklin" onChange={this.handleInput} />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                    <Form.Label>Number</Form.Label>
+                    <Form.Control min={0} name="number" type="number" placeholder="23" onChange={this.handleInput} />
+                </Form.Group>
+                <Button variant="primary" type="submit">
+                    Add Player
+                </Button>
+            </Form>
         ); // return
     } // render
 

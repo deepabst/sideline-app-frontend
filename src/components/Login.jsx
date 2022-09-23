@@ -1,11 +1,14 @@
 import React from 'react';
 import axios from 'axios';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+
 
 let BASE_URL;
-if( process.env.NODE_ENV === 'development'){
-  BASE_URL = 'http://localhost:3000/';
+if (process.env.NODE_ENV === 'development') {
+    BASE_URL = 'http://localhost:3000/';
 } else {
-  BASE_URL = 'https://sidelines-app.herokuapp.com/';
+    BASE_URL = 'https://sidelines-app.herokuapp.com/';
 }
 
 class Login extends React.Component {
@@ -50,25 +53,22 @@ class Login extends React.Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
-                <label>Login Form</label>
-                
-                <input 
-                onChange={this.handleInput}
-                name="email"
-                type="email"
-                placeholder="Enter Email"
-                />
-                
-                <input 
-                onChange={this.handleInput}
-                name="password"
-                type="password"
-                placeholder="Enter Password"
-                />
-                <br />
-                <button>Login</button>
-            </form>
+            <Form onSubmit={this.handleSubmit}>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Email address</Form.Label>
+                    <Form.Control name="email" type="email" placeholder="e.g. jwinger@ga.com" onChange={this.handleInput} />
+                    <Form.Text className="text-muted">
+                        We'll never share your email with anyone else.
+                    </Form.Text>
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formBasicPassword">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control name="password" type="password" placeholder="e.g chicken" onChange={this.handleInput} />
+                </Form.Group>
+                <Button variant="primary" type="submit">
+                    Login
+                </Button>
+            </Form>
         ); // return
     } // render
 

@@ -1,5 +1,7 @@
 import React from "react";
 import axios from "axios";
+import { Form, Button } from "react-bootstrap";
+
 
 let BASE_URL;
 if( process.env.NODE_ENV === 'development'){
@@ -64,11 +66,15 @@ class TeamEdit extends React.Component {
     
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
-                <label>Name</label>
-                <input name="name" type="text" value={this.state.team.name} onChange={this.handleInput} />
-                <button>Update Team</button>
-            </form>
+            <Form onSubmit={this.handleSubmit}>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Name</Form.Label>
+                    <Form.Control name="name" type="text" placeholder="e.g. Kicks" value={this.state.team.name} onChange={this.handleInput} />
+                </Form.Group>
+                <Button variant="primary" type="submit">
+                    Update Team
+                </Button>
+            </Form>
         );//return
     }// render
 } // class TeamEdit

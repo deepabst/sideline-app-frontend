@@ -1,4 +1,5 @@
 import React from "react";
+import { Form, Button } from "react-bootstrap";
 class TeamForm extends React.Component {
 
     state = {
@@ -19,11 +20,15 @@ class TeamForm extends React.Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
-                <label>Name</label>
-                <input name="name" type="text" onChange={this.handleInput} />
-                <button>Add</button>
-            </form>
+            <Form onSubmit={this.handleSubmit}>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Name</Form.Label>
+                    <Form.Control name="name" type="text" placeholder="e.g. Hawthorn" onChange={this.handleInput} />
+                </Form.Group>
+                <Button variant="primary" type="submit">
+                    Add Team
+                </Button>
+            </Form>
         );//return
     }// render
 } // class TeamForm
