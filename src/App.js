@@ -1,33 +1,44 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import axios from 'axios';
 import ActionCable from 'action-cable-react-jwt';
-import Button from 'react-bootstrap/Button';
+import 'bootstrap/dist/css/bootstrap.min.css';
 // eslint-disable-next-line
 import { Route, Link, HashRouter as Router } from 'react-router-dom';
-
+// knock Login
 import Login from './components/Login'
 import MyProfile from './components/MyProfile'
 
+// Players
 import Players from './components/Players';
 import PlayerProfile from './components/PlayerProfile';
 import PlayerEdit from './components/PlayerEdit';
 
+// Teams
 import Teams from './components/Teams';
 import TeamProfile from './components/TeamProfile';
 import TeamEdit from './components/TeamEdit';
-import Chatrooms from './components/Chatrooms';
-import IndividualChatroom from './components/IndividualChatroom';
 
+// Stats
 import Stats from './components/Stats';
 import StatProfile from './components/StatProfile';
 import StatEdit from './components/StatEdit';
 
+//Matches
+import Matches from './components/Matches';
+import MatchProfile from './components/MatchProfile';
+import MatchEdit from './components/MatchEdit';
+
+//Chatrooms
+import Chatrooms from './components/Chatrooms';
+
 let BASE_URL;
+let WS_URL;
 if( process.env.NODE_ENV === 'development'){
   BASE_URL = 'http://localhost:3000';
+  WS_URL = 'ws://localhost:3000/cable';
 } else {
   BASE_URL = 'https://sidelines-app.herokuapp.com/';
+  WS_URL = 'wss://sidelines-app.herokuapp.com/cable';
 }
 
 class App extends React.Component {
@@ -51,7 +62,7 @@ class App extends React.Component {
     // this is an example using localStorage
     const yourToken = localStorage.getItem("jwt") // check with Luke whether we have to get separate token
     let App = {}
-    App.cable = ActionCable.createConsumer('ws://localhost:3000/cable', yourToken)
+    App.cable = ActionCable.createConsumer(WS_URL, yourToken)
     const subscription = App.cable.subscriptions.create({channel: 'ChatChannel'}, {
       connected: () => {},
       disconnected: () => {},
@@ -114,6 +125,7 @@ class App extends React.Component {
                     <li><Link to="/teams">Teams</Link></li>
                     <li><Link to="/chatrooms">Chatrooms</Link></li>
                     <li><Link to="/stats">Stats</Link></li>
+                    <li><Link to="/matches">Matches</Link></li>
                     <li><Link onClick={this.handleLogout} to='/'>Logout</Link></li>
                   </ul>
                 )
@@ -127,30 +139,45 @@ class App extends React.Component {
           </nav>
           <hr />
         </header>
+        {/* if there is a user then display all the logged in links */}
         {this.state.currentUser.username &&
           (
             <div>
               <Route exact path="/my_profile"
                 render={(props) => <MyProfile user={this.state.currentUser}{...props} />} />
+
+                {/* PLAYERS */}
               <Route exact path="/players"
                 render={(props) => <Players user={this.state.currentUser}{...props} />} />
+              <Route exact path="/players/:id" component={PlayerProfile} />
+              <Route exact path="/players/:id/edit" component={PlayerEdit} />
+              
+                {/* TEAMS */}
               <Route exact path="/teams"
                 render={(props) => <Teams user={this.state.currentUser}{...props} />} />
               <Route exact path="/teams/:id"
                 render={(props) => <TeamProfile user={this.state.currentUser}{...props} />} />
               <Route exact path="/teams/:id/edit"
                 render={(props) => <TeamEdit user={this.state.currentUser}{...props} />} />
+                
+                {/* STATS */}
               <Route exact path="/stats"
                 render={(props) => <Stats user={this.state.currentUser}{...props} />} />
               <Route exact path="/stats/:id"
                 render={(props) => <StatProfile user={this.state.currentUser}{...props} />} />
               <Route exact path="/stats/:id/edit"
                 render={(props) => <StatEdit user={this.state.currentUser}{...props} />} />
-              <Route exact path="/players/:id" component={PlayerProfile} />
-              <Route exact path="/players/:id/edit" component={PlayerEdit} />
-              <Route exact path="/chatrooms" render={(props) => <Chatrooms user={this.state.currentUser}{...props} />} />
-              {/* <Route exact path="/chatrooms/:id" component={IndividualChatroom} /> */}
 
+
+              <Route exact path="/matches"
+                render={(props) => <Matches user={this.state.currentUser}{...props} />} />
+              <Route exact path="/matches/:id"
+                render={(props) => <MatchProfile user={this.state.currentUser}{...props} />} />
+              <Route exact path="/matches/:id/edit"
+                render={(props) => <MatchEdit user={this.state.currentUser}{...props} />} />
+
+                {/* CHATROOMS */}
+              <Route exact path="/chatrooms" render={(props) => <Chatrooms user={this.state.currentUser}{...props} />} />
             </div>
           )
         }
